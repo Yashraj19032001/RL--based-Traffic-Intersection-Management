@@ -1,0 +1,15 @@
+<configuration>
+    <input>
+        <net-file value="Network.net.xml"/>
+        <route-files value="Route.rou.xml"/>
+	
+    </input>
+    <time>
+        <begin value="0"/>
+        <end value="100000"/>
+    </time>
+ <output>
+        <summary-output value="output_sumo.xml"/>
+ </output>
+
+</configuration>

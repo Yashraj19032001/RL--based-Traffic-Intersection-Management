@@ -1,0 +1,30 @@
+<routes>
+    <vType id="car" accel="2.6" decel="4.5" length="5" maxSpeed="25"/>
+    <route id="route0" edges="E0 -E2"/>
+    <flow id="flow0" route="route0" begin="0" end="3600" vehsPerHour="600"/>
+    <route id="route1" edges="E0 -E1"/>
+    <flow id="flow1" route="route1" begin="0" end="3600" vehsPerHour="600"/>
+    <route id="route2" edges="E0 E3"/>
+    <flow id="flow2" route="route2" begin="0" end="3600" vehsPerHour="600"/>
+
+    <route id="route3" edges="E2 -E1"/>
+    <flow id="flow3" route="route3" begin="0" end="3600" vehsPerHour="600"/>
+    <route id="route4" edges="E2 E3"/>
+    <flow id="flow4" route="route4" begin="0" end="3600" vehsPerHour="600"/>
+    <route id="route5" edges="E2 -E0"/>
+    <flow id="flow5" route="route5" begin="0" end="3600" vehsPerHour="600"/>
+
+    <route id="route6" edges="E1 E3"/>
+    <flow id="flow6" route="route6" begin="0" end="3600" vehsPerHour="600"/>
+    <route id="route7" edges="E1 -E0"/>
+    <flow id="flow7" route="route7" begin="0" end="3600" vehsPerHour="600"/>
+    <route id="route8" edges="E1 -E2"/>
+    <flow id="flow8" route="route8" begin="0" end="3600" vehsPerHour="600"/>
+
+    <route id="route9" edges="-E3 -E1"/>
+    <flow id="flow9" route="route9" begin="0" end="3600" vehsPerHour="600"/>
+    <route id="route10" edges="-E3 -E0"/>
+    <flow id="flow10" route="route10" begin="0" end="3600" vehsPerHour="600"/>
+    <route id="route11" edges="-E3 -E2"/>
+    <flow id="flow11" route="route11" begin="0" end="3600" vehsPerHour="600"/>
+</routes>
