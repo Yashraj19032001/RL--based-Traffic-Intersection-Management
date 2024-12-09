@@ -1,0 +1,16 @@
+***Starting server on port 50240 ***
+Loading net-file from '/Users/yashraj/Library/CloudStorage/OneDrive-TechnischeHochschuleIngolstadt/THI/Academics/Sem 3/General Elective/Smart Mobility/My Paper/New/RL--based-Traffic-Intersection-Management/Network.net.xml' ... done (5ms).
+Loading done.
+Simulation version 1.20.0 started with time: 0.00.
+Simulation ended at time: 0.00
+Reason: TraCI issued load command.
+Performance: 
+ Duration: 0.04s
+ TraCI-Duration: 0.00s
+ Real time factor: 0
+ UPS: 0.000000
+Vehicles: 
+ Inserted: 0
+ Running: 0
+ Waiting: 0
+
