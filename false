@@ -1,16 +1,17 @@
-***Starting server on port 50240 ***
-Loading net-file from '/Users/yashraj/Library/CloudStorage/OneDrive-TechnischeHochschuleIngolstadt/THI/Academics/Sem 3/General Elective/Smart Mobility/My Paper/New/RL--based-Traffic-Intersection-Management/Network.net.xml' ... done (5ms).
+***Starting server on port 59550 ***
+Loading net-file from '/Users/yashraj/Library/CloudStorage/OneDrive-TechnischeHochschuleIngolstadt/THI/Academics/Sem 3/General Elective/Smart Mobility/My Paper/New/RL--based-Traffic-Intersection-Management/Network.net.xml' ... done (3ms).
+Loading additional-files from '/Users/yashraj/Library/CloudStorage/OneDrive-TechnischeHochschuleIngolstadt/THI/Academics/Sem 3/General Elective/Smart Mobility/My Paper/New/RL--based-Traffic-Intersection-Management/Induction_loop.xml' ... done (2ms).
 Loading done.
 Simulation version 1.20.0 started with time: 0.00.
-Simulation ended at time: 0.00
-Reason: TraCI issued load command.
+Simulation ended at time: 1001.00
+Reason: TraCI requested termination.
 Performance: 
- Duration: 0.04s
- TraCI-Duration: 0.00s
- Real time factor: 0
- UPS: 0.000000
+ Duration: 41.58s
+ TraCI-Duration: 41.14s
+ Real time factor: 24.0723
+ UPS: 1999.206406
 Vehicles: 
- Inserted: 0
- Running: 0
- Waiting: 0
+ Inserted: 926 (Loaded: 2004)
+ Running: 85
+ Waiting: 1078
 

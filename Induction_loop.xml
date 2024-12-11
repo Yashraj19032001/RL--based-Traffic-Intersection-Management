@@ -1,0 +1,14 @@
+<additional>
+    <inductionLoop id="myLoop1" lane="E0_0" pos="60" period="900" file="out.xml"/> #North-South
+    <inductionLoop id="myLoop2" lane="E0_1" pos="60" period="900" file="out.xml"/> #North-South
+    <inductionLoop id="myLoop3" lane="E1_0" pos="60" period="900" file="out.xml"/> #West-East
+    <inductionLoop id="myLoop4" lane="E1_1" pos="60" period="900" file="out.xml"/> #West-East
+    <inductionLoop id="myLoop5" lane="E2_0" pos="60" period="900" file="out.xml"/> #South-North 
+    <inductionLoop id="myLoop6" lane="E2_1" pos="60" period="900" file="out.xml"/> #South-North
+    <inductionLoop id="myLoop7" lane="E3_0" pos="60" period="900" file="out.xml"/> #East-West
+    <inductionLoop id="myLoop8" lane="E3_1" pos="60" period="900" file="out.xml"/> #East-West
+
+   
+
+    <!-- <vType id="car" maxSpeed="20" length="5"/> -->
+</additional>

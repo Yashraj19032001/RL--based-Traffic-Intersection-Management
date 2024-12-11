@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2024-12-11 01:09:20 by Eclipse SUMO sumo Version 1.20.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="/Users/yashraj/Library/CloudStorage/OneDrive-TechnischeHochschuleIngolstadt/THI/Academics/Sem 3/General Elective/Smart Mobility/My Paper/New/RL&#45;&#45;based-Traffic-Intersection-Management/Network.net.xml"/>
+        <route-files value="/Users/yashraj/Library/CloudStorage/OneDrive-TechnischeHochschuleIngolstadt/THI/Academics/Sem 3/General Elective/Smart Mobility/My Paper/New/RL&#45;&#45;based-Traffic-Intersection-Management/Route.rou.xml"/>
+        <additional-files value="/Users/yashraj/Library/CloudStorage/OneDrive-TechnischeHochschuleIngolstadt/THI/Academics/Sem 3/General Elective/Smart Mobility/My Paper/New/RL&#45;&#45;based-Traffic-Intersection-Management/Induction_loop.xml"/>
+    </input>
+
+    <time>
+        <begin value="0"/>
+        <end value="100000"/>
+    </time>
+
+    <report>
+        <log value="false"/>
+        <no-step-log value="true"/>
+    </report>
+
+    <traci_server>
+        <remote-port value="59550"/>
+    </traci_server>
+
+</configuration>
+-->
+
+<detector xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/det_e1_file.xsd">
+    <interval begin="0.00" end="900.00" id="myLoop1" nVehContrib="172" flow="688.00" occupancy="35.50" speed="3.83" harmonicMeanSpeed="2.69" length="5.00" nVehEntered="172"/>
+    <interval begin="0.00" end="900.00" id="myLoop2" nVehContrib="95" flow="380.00" occupancy="48.29" speed="2.34" harmonicMeanSpeed="1.11" length="5.00" nVehEntered="96"/>
+    <interval begin="0.00" end="900.00" id="myLoop3" nVehContrib="72" flow="288.00" occupancy="17.24" speed="3.27" harmonicMeanSpeed="2.32" length="5.00" nVehEntered="72"/>
+    <interval begin="0.00" end="900.00" id="myLoop4" nVehContrib="54" flow="216.00" occupancy="31.25" speed="1.74" harmonicMeanSpeed="0.97" length="5.00" nVehEntered="55"/>
+    <interval begin="0.00" end="900.00" id="myLoop5" nVehContrib="164" flow="656.00" occupancy="32.52" speed="4.34" harmonicMeanSpeed="2.91" length="5.00" nVehEntered="166"/>
+    <interval begin="0.00" end="900.00" id="myLoop6" nVehContrib="90" flow="360.00" occupancy="54.91" speed="2.11" harmonicMeanSpeed="0.92" length="5.00" nVehEntered="92"/>
+    <interval begin="0.00" end="900.00" id="myLoop7" nVehContrib="82" flow="328.00" occupancy="19.12" speed="3.09" harmonicMeanSpeed="2.39" length="5.00" nVehEntered="83"/>
+    <interval begin="0.00" end="900.00" id="myLoop8" nVehContrib="60" flow="240.00" occupancy="29.76" speed="2.19" harmonicMeanSpeed="1.13" length="5.00" nVehEntered="61"/>
+    <interval begin="900.00" end="1001.00" id="myLoop1" nVehContrib="13" flow="463.37" occupancy="28.86" speed="2.72" harmonicMeanSpeed="2.32" length="5.00" nVehEntered="14"/>
+    <interval begin="900.00" end="1001.00" id="myLoop2" nVehContrib="10" flow="356.44" occupancy="61.01" speed="0.84" harmonicMeanSpeed="0.73" length="5.00" nVehEntered="10"/>
+    <interval begin="900.00" end="1001.00" id="myLoop3" nVehContrib="8" flow="285.15" occupancy="17.64" speed="2.62" harmonicMeanSpeed="2.24" length="5.00" nVehEntered="8"/>
+    <interval begin="900.00" end="1001.00" id="myLoop4" nVehContrib="6" flow="213.86" occupancy="54.86" speed="1.00" harmonicMeanSpeed="0.53" length="5.00" nVehEntered="5"/>
+    <interval begin="900.00" end="1001.00" id="myLoop5" nVehContrib="18" flow="641.58" occupancy="34.88" speed="5.40" harmonicMeanSpeed="3.66" length="5.00" nVehEntered="19"/>
+    <interval begin="900.00" end="1001.00" id="myLoop6" nVehContrib="8" flow="285.15" occupancy="64.65" speed="1.09" harmonicMeanSpeed="0.61" length="5.00" nVehEntered="8"/>
+    <interval begin="900.00" end="1001.00" id="myLoop7" nVehContrib="13" flow="463.37" occupancy="31.87" speed="2.49" harmonicMeanSpeed="2.02" length="5.00" nVehEntered="13"/>
+    <interval begin="900.00" end="1001.00" id="myLoop8" nVehContrib="9" flow="320.79" occupancy="28.73" speed="1.68" harmonicMeanSpeed="1.48" length="5.00" nVehEntered="8"/>
+</detector>
