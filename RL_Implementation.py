@@ -34,22 +34,32 @@ class DQNAgent:
             return random.randrange(self.action_size)
         act_values = self.model.predict(state, verbose=0)
         return np.argmax(act_values[0])
-
-    def replay(self, batch_size): #experience replay
-        minibatch = random.sample(self.memory, batch_size) #randomly sample from memory
-        for state, action, reward, next_state, done in minibatch:
-            target = reward
-            if not done:
-                target = (reward + self.gamma *
-                          np.amax(self.model.predict(next_state, verbose=0)[0]))#Q-learning target
-            target_f = self.model.predict(state, verbose=0)
-            target_f[0][action] = target#update the target
-            self.model.fit(state, target_f, epochs=1, verbose=0)#fit the model
-            
+    
+   
+    def replay(self, batch_size): 
+    # Sample a minibatch of experiences from memory
+        minibatch = random.sample(self.memory, batch_size)
+    
+        # Prepare batches of states and next states
+        states = np.vstack([sample[0] for sample in minibatch])  # Extract states
+        next_states = np.vstack([sample[3] for sample in minibatch])  # Extract next states
+    
+        # Predict Q-values for current states and next states in a batch
+        target_f = self.model.predict(states, verbose=0)
+        next_target = self.model.predict(next_states, verbose=0)
+        
+        for i, (state, action, reward, next_state, done) in enumerate(minibatch):
+            # Compute Q-learning target
+            target = reward if done else reward + self.gamma * np.amax(next_target[i])
+            target_f[i][action] = target  # Update Q-value for the selected action
+        
+        # Train the model using the batch of states and updated Q-values
+        self.model.fit(states, target_f, epochs=1, verbose=0, batch_size=batch_size)
+        
+        # Decay the exploration rate
         if self.epsilon > self.epsilon_min:
-            self.epsilon_decay = math.exp(math.log(self.epsilon_min/self.epsilon)/ 100)#decay epsilon
-            
-            self.epsilon *= max(self.epsilon_min, self.epsilon * self.epsilon_decay)
+            self.epsilon *= math.exp(math.log(self.epsilon_min / self.epsilon) / 100)
+
 
 # functions to interact with SUMO
 def get_traffic_state():

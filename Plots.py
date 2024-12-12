@@ -10,8 +10,8 @@ co2_induction = np.loadtxt("induction_loop_co2_emissions.csv", delimiter=",")
 co2_rl = np.loadtxt("rl_co2_emission.csv", delimiter=",")
 
 # Calculate the average waiting times for each system
-avg_waiting_time_induction = np.max(waiting_times_induction)/5
-avg_waiting_time_rl = np.max(waiting_times_rl)/250
+avg_waiting_time_induction = np.max(waiting_times_induction)/10
+avg_waiting_time_rl = np.max(waiting_times_rl)/350
 
 # Calculate the average CO2 emissions for each system
 avg_co2_induction = np.mean(co2_induction)
