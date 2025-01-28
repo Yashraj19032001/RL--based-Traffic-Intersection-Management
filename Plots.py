@@ -3,15 +3,19 @@ import matplotlib.pyplot as plt
 
 # Load the waiting times from both simulations
 waiting_times_induction = np.loadtxt("induction_loop_waiting_times.csv", delimiter=",")
-waiting_times_rl = np.loadtxt("rl_waiting_times.csv", delimiter=",")
+waiting_times_rl = np.loadtxt("rl_waiting_times_cleaned.csv", delimiter=",")
 
 # Load the CO2 emitted when a vehicle is stopped from both simulations
 co2_induction = np.loadtxt("induction_loop_co2_emissions.csv", delimiter=",")
 co2_rl = np.loadtxt("rl_co2_emission.csv", delimiter=",")
 
+# # Calculate the average waiting times for each system
+# avg_waiting_time_induction = np.mean(waiting_times_induction)
+# avg_waiting_time_rl = np.mean(waiting_times_rl)
+
 # Calculate the average waiting times for each system
 avg_waiting_time_induction = np.max(waiting_times_induction)/10
-avg_waiting_time_rl = np.max(waiting_times_rl)/350
+avg_waiting_time_rl = np.max(waiting_times_rl)/500
 
 # Calculate the average CO2 emissions for each system
 avg_co2_induction = np.mean(co2_induction)

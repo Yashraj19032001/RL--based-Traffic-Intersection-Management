@@ -1,20 +1,21 @@
-***Starting server on port 58968 ***
+***Starting server on port 55728 ***
 Loading net-file from '/Users/yashraj/Library/CloudStorage/OneDrive-TechnischeHochschuleIngolstadt/THI/Academics/Sem 3/General Elective/Smart Mobility/My Paper/New/RL--based-Traffic-Intersection-Management/Network.net.xml' ... done (3ms).
-Loading additional-files from '/Users/yashraj/Library/CloudStorage/OneDrive-TechnischeHochschuleIngolstadt/THI/Academics/Sem 3/General Elective/Smart Mobility/My Paper/New/RL--based-Traffic-Intersection-Management/Induction_loop.xml' ... done (2ms).
+Loading additional-files from '/Users/yashraj/Library/CloudStorage/OneDrive-TechnischeHochschuleIngolstadt/THI/Academics/Sem 3/General Elective/Smart Mobility/My Paper/New/RL--based-Traffic-Intersection-Management/Induction_loop.xml' ... done (3ms).
 Loading done.
-Simulation started with time: 0.00.
+Simulation version 1.20.0 started with time: 0.00.
 Warning: Vehicle 'flow3.2' performs emergency braking on lane 'E2_1' with decel=9.00, wished=4.50, severity=1.00, time=35.00.
 Warning: Vehicle 'flow0.4' performs emergency braking on lane 'E0_0' with decel=9.00, wished=4.50, severity=1.00, time=59.00.
 Warning: Vehicle 'flow0.15' performs emergency braking on lane ':J1_1_0' with decel=9.00, wished=4.50, severity=1.00, time=192.00.
-Simulation ended at time: 857.00
+Simulation ended at time: 1001.00
+Reason: TraCI requested termination.
 Performance: 
- Duration: 37.13s
- TraCI-Duration: 32.46s
- Real time factor: 23.0798
- UPS: 1300.630184
+ Duration: 27.92s
+ TraCI-Duration: 27.64s
+ Real time factor: 35.8512
+ UPS: 2101.178325
 Vehicles: 
- Inserted: 800 (Loaded: 864)
- Running: 71
- Waiting: 64
+ Inserted: 934 (Loaded: 1008)
+ Running: 76
+ Waiting: 74
  Emergency Braking: 3
 

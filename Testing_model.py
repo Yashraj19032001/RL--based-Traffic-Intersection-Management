@@ -14,7 +14,7 @@ def get_traffic_state():
     state = []
 
     for lane in lanes:
-        num_vehicles = traci.lane.getLastStepVehicleNumber(lane)  # Number of vehicles in the lane at the last step
+        num_vehicles = traci.lane.getLastStepVehicleNumber(lane)
         state.append(num_vehicles)
 
         waiting_time = traci.lane.getWaitingTime(lane)
@@ -27,102 +27,126 @@ def get_traffic_state():
 
 def apply_action(action):
     traffic_light_id = "J1"  # Junction_ID
+    if action == 0:
+        traci.trafficlight.setPhase(traffic_light_id, 0)
+    elif action == 1:
+        traci.trafficlight.setPhase(traffic_light_id, 1)
+    elif action == 2:
+        traci.trafficlight.setPhase(traffic_light_id, 2)
+    elif action == 3:
+        traci.trafficlight.setPhase(traffic_light_id, 3)
 
-    if action == 0:  # Phase 0, green for some lanes
-        traci.trafficlight.setPhase(traffic_light_id, 0)  # Change to phase 0
-    elif action == 1:  # Phase 1, green for other lanes
-        traci.trafficlight.setPhase(traffic_light_id, 1)  # Change to phase 1
-    elif action == 2:  # Phase 2, green for other lanes
-        traci.trafficlight.setPhase(traffic_light_id, 2) # Change to phase 2
-    elif action == 3:  # Phase 3, green for other lanes
-        traci.trafficlight.setPhase(traffic_light_id, 3) # Change to phase 3
-# Function to save the waiting times to a CSV file
 def save_waiting_times(waiting_times, filename="rl_waiting_times.csv"):
     try:
         with open(filename, mode='a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(waiting_times)
+            print(f"Saving waiting times row: {waiting_times}")
     except Exception as e:
         print(f"Error saving waiting times: {e}")
 
-# Function to save CO2 emissions to a CSV file
 def save_co2_emissions(co2_emissions, filename="rl_co2_emission.csv"):
     with open(filename, mode='a', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(co2_emissions)  # Save the CO2 emissions for the current step
+        writer.writerow(co2_emissions)
 
-# Function to calculate CO2 emissions
 def get_total_co2_emission_at_traffic_light():
     vehicle_ids = traci.vehicle.getIDList()
-    total_co2 = 0  # Initialize total CO2 emissions
+    total_co2 = 0
 
     for veh in vehicle_ids:
-        # Check if the vehicle is stopped (speed is close to 0)
         speed = traci.vehicle.getSpeed(veh)
-        if speed < 0.01:  # Threshold for considering vehicle as stopped
-            # Add CO2 emission of the vehicle if it is stopped
+        if speed < 0.01:  # Consider vehicle 'stopped'
             total_co2 += traci.vehicle.getCO2Emission(veh)
-
     return total_co2
+
+# -----------------------------------------------------------------
+# NEW FUNCTION FOR THROUGHPUT MEASUREMENT
+# -----------------------------------------------------------------
+def measure_throughput():
+    """
+    Returns the number of vehicles that have arrived/completed their journey
+    during this step. This is an indicator of how many vehicles successfully
+    passed through the network or reached their destination.
+    """
+    return traci.simulation.getArrivedNumber()
+
+def save_throughput(throughputs, filename="rl_throughput.csv"):
+    with open(filename, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(throughputs)
 
 # Run the RL simulation to test the model
 def run_test_simulation(model_path="traffic_model.keras"):
-    sumo_binary = "sumo"  # or "sumo" for headless mode
-    sumo_config = "/Users/yashraj/Library/CloudStorage/OneDrive-TechnischeHochschuleIngolstadt/THI/Academics/Sem 3/General Elective/Smart Mobility/My Paper/New/RL--based-Traffic-Intersection-Management/Main_Simulation.sumocfg"  # Replace with your SUMO config file path
+    sumo_binary = "sumo"  
+    sumo_config = "/Users/yashraj/Library/CloudStorage/OneDrive-TechnischeHochschuleIngolstadt/THI/Academics/Sem 3/General Elective/Smart Mobility/My Paper/New/RL--based-Traffic-Intersection-Management/Main_Simulation.sumocfg"
 
     traci.start([sumo_binary, "-c", sumo_config, "--no-step-log", "true", "--log", "false"])
 
     # Load the saved model
     model = load_model(model_path)
 
-    steps = 1001  # Number of simulation steps for testing
-    batch_size = 100  # Batch size for averaging waiting time and emissions
-    waiting_times_per_batch = []  # Store average waiting times for each batch
-    co2_emissions = []  # Store CO2 emissions over time
-    current_batch_waiting_times = []  # Store waiting times within the current batch
-    current_batch_co2_emissions = []  # Store CO2 emissions within the current batch
+    steps = 1001  # total simulation steps for testing
+    batch_size = 100
+    waiting_times_per_batch = []
+    co2_emissions = []
+    throughput_list = []  # Store throughput (arrived vehicles) per step
+    
+    current_batch_waiting_times = []
+    current_batch_co2_emissions = []
+    current_batch_throughputs = []
 
     for step in range(steps):
-        traci.simulationStep()  # Advance the simulation by 1 step
+        traci.simulationStep()  # Advance the simulation
 
-        # Get the current state from the simulation
+        # Current state from SUMO
         state = np.array([get_traffic_state()])
 
-        # Predict the best action using the loaded model
-        action = np.argmax(model.predict(state))  # Predict action based on the state
+        # Model predicts best action
+        action_values = model.predict(state)
+        action = np.argmax(action_values)
 
-        # Apply the predicted action (change the traffic light phase)
+        # Apply predicted action
         apply_action(action)
 
-        # Collect the total waiting time for all vehicles in the simulation
-        total_waiting_time = sum(get_traffic_state()[1::3])  # Extract waiting times from the state
+        # Calculate total waiting time
+        total_waiting_time = sum(get_traffic_state()[1::3])
         current_batch_waiting_times.append(total_waiting_time)
 
-        # Record CO2 emissions
+        # Calculate CO2 for stopped vehicles
         total_co2 = get_total_co2_emission_at_traffic_light()
         co2_emissions.append(total_co2)
         current_batch_co2_emissions.append(total_co2)
 
-        # If batch is complete, calculate the average waiting time and CO2 emissions for the batch
+        # MEASURE THROUGHPUT
+        arrived_vehicles = measure_throughput()
+        throughput_list.append(arrived_vehicles)
+        current_batch_throughputs.append(arrived_vehicles)
+
+        # If batch is complete, compute averages
         if (step + 1) % batch_size == 0:
             avg_waiting_time = np.mean(current_batch_waiting_times)
             waiting_times_per_batch.append(avg_waiting_time)
+            save_waiting_times([avg_waiting_time])
             
-            save_waiting_times([avg_waiting_time])  # Save average waiting times
-            # Save the average CO2 emissions for this batch
             avg_co2_emissions = np.mean(current_batch_co2_emissions)
-            save_co2_emissions([avg_co2_emissions])  # Save the CO2 emissions of this batch
+            save_co2_emissions([avg_co2_emissions])
+            
+            # Save throughput (sum or average for the batch)
+            batch_throughput = np.sum(current_batch_throughputs)
+            save_throughput([batch_throughput])
 
-            # Reset for the next batch
-            current_batch_waiting_times = []  
-            current_batch_co2_emissions = []  
+            # Reset for next batch
+            current_batch_waiting_times = []
+            current_batch_co2_emissions = []
+            current_batch_throughputs = []
 
-        # Print the progress
-        print(f"Step {step + 1}/{steps} - Action: {action} - CO2 Emission: {total_co2}")
+        # Print progress
+        print(f"Step {step + 1}/{steps} - Action: {action} - CO2 Emission: {total_co2} - Throughput: {arrived_vehicles}")
 
     traci.close()
 
-    # Plot the average waiting time per batch
+    # Plot average waiting time per batch
     plt.figure()
     plt.plot(range(1, len(waiting_times_per_batch) + 1), waiting_times_per_batch, marker='o')
     plt.title('Average Waiting Time per 100 Steps')
@@ -139,10 +163,20 @@ def run_test_simulation(model_path="traffic_model.keras"):
     plt.ylabel('CO2 Emission (g)')
     plt.grid()
     plt.savefig("co2_emissions_over_time_Rl.png")
+
+    # Plot throughput over time
+    plt.figure()
+    plt.plot(range(1, steps + 1), throughput_list, marker='x', color='green', markersize=3, alpha=0.7)
+    plt.title('Throughput (Arrived Vehicles) Over Time')
+    plt.xlabel('Simulation Steps')
+    plt.ylabel('Arrived Vehicles')
+    plt.grid()
+    plt.savefig("throughput_over_time_Rl.png")
+
     plt.show()
     
-    # Calculate the average CO2 emissions over all steps
-    average_co2 = np.mean(co2_emissions)  # Calculate the mean of the CO2 emissions
+    # Calculate and print average CO2 emissions over all steps
+    average_co2 = np.mean(co2_emissions)
     print(f"Average CO2 Emission over {len(co2_emissions)} steps: {average_co2:.2f} grams")
 
 # Run the test simulation
